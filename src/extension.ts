@@ -10,35 +10,34 @@ let myStatusBarItem: vscode.StatusBarItem;
 
 async function updateStatusBarItem(): Promise<any> {
   const { filepath } = await getCurrentFilenameAndPath();
+  const context = getLiquidFileType(filepath);
   const includes = await getSnippetIncludes();
 
-  if (!fileIsSnippet(filepath)) {
-    myStatusBarItem.hide();
-    return;
+  if (!context) {
+    return myStatusBarItem.hide();
   }
 
    if (includes.length === 0) {
     myStatusBarItem.text = `⚠️ Not included anywhere`;
-    myStatusBarItem.show();
-    return;
+  } else {
+    myStatusBarItem.text = `⬇ Included in...`;
   }
 
-  myStatusBarItem.text = `⬇ Included in...`;
-  myStatusBarItem.show();
-  return;
+  return myStatusBarItem.show();
 }
 
 async function getSnippetIncludes(): Promise<Array<string>> {
   const { filename, filepath } = getCurrentFilenameAndPath();
+  const type = getLiquidFileType(filepath);
 
-  if (!filename || !filepath) return [];
+  if (!filename || !filepath || !type) return [];
 
-  const includes = await findSnippetIncludes(filename);
+  const includes = await findSnippetSectionIncludes(filename, type);
   const workspaceFolders = vscode.workspace.workspaceFolders;
 
   if (workspaceFolders) {
     const rootDirPath = workspaceFolders[0].uri.path;
-    const paths = includes.map(include => relative(rootDirPath, include.path));
+    const paths = includes.map((include: {path: string}) => relative(rootDirPath, include.path));
     return paths;
   }
 
@@ -53,27 +52,32 @@ function getCurrentFilenameAndPath(): { filename: string, filepath: string } {
   return { filename, filepath };
 }
 
-function fileIsSnippet(filepath: string): Boolean {
-  const isLiquidFile = extname(filepath) === '.liquid';
-  const inSnippetDirectory = filepath.includes('/snippets/');
-
-  return inSnippetDirectory && isLiquidFile;
-}
-
-async function findSnippetIncludes(filename: string): Promise<Array<any>> {
-  const snippetName = basename(filename, '.liquid');
+async function findSnippetSectionIncludes(filename: string, type: string): Promise<Array<any>> {
+  const snippetSectionName = basename(filename, '.liquid');
   const liquidFiles = await vscode.workspace.findFiles('**/*.liquid');
-  const liquidFileContents = liquidFiles.map(async liquidFile => {
-    const contents = await readLiquidFile(liquidFile.path);
-    return { ...liquidFile, contents };
-  });
-  const results = await Promise.all(liquidFileContents);
-  const matches = results.filter(result => {
-    const snippetIncludeRegex = new RegExp('{\%\\s+include\\s+[\'\"]'+ snippetName +'[\'\"]', 'gim');
+
+  const liquidFileWithContents = await Promise.all(
+    liquidFiles.map(async liquidFile => {
+      const contents = await readLiquidFile(liquidFile.path);
+      return { ...liquidFile, contents };
+    })
+  );
+
+  return liquidFileWithContents.filter(result => {
+    const regex = `{\%\\s+${type === 'snippet' ? 'include' : 'section'}\\s+[\'\"]${snippetSectionName}[\'\"]`;
+    const snippetIncludeRegex = new RegExp(regex, 'gim');
     return snippetIncludeRegex.test(result.contents);
   });
+}
 
-  return matches;
+function getLiquidFileType(filepath: string): string | void {
+  if (filepath.includes('/snippets/')) {
+    return 'snippet';
+  } else if (filepath.includes('/sections/')) {
+    return 'section';
+  }
+
+  return;
 }
 
 function readLiquidFile(filepath: string): Promise<any> {
@@ -88,7 +92,8 @@ function readLiquidFile(filepath: string): Promise<any> {
 export function activate({ subscriptions }: vscode.ExtensionContext) {
 	// register a command that is invoked when the status bar
 	// item is selected
-	const myCommandId = 'sample.showSelectionCount';
+	const myCommandId = 'dev.liquidSnippetIncludeStatus';
+
   subscriptions.push(vscode.commands.registerCommand(myCommandId, async () => {
     const paths = await getSnippetIncludes();
     const message = `Included in: ${paths.join(', ')}`;
