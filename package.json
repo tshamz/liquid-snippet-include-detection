@@ -4,7 +4,10 @@
 	"description": "A Visual Studio Code extension that tells you whether other liquid files are including the snippet or section you're currently viewing.",
 	"version": "0.7.0",
 	"publisher": "tshamz",
-	"repository": "https://github.com/packdigital/import-export",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/packdigital/import-export"
+  },
 	"engines": {
 		"vscode": "^1.36.0"
 	},
@@ -20,7 +23,7 @@
 		"Jose Canseco",
 		"Theming"
 	],
-	"icon": "https://raw.githubusercontent.com/packdigital/import-export/master/icon.jpg",
+	"icon": "icon.jpg",
 	"activationEvents": [
 		"*"
 	],
