@@ -1,9 +1,9 @@
 {
-	"name": "liquid-snippet-import-detection",
-	"displayName": "Liquid Snippet Import Detection",
-	"description": "Tells you whether other liquid files are including the currently viewed snippet, and if so, which files.",
+	"name": "liquid-snippet-include-detection",
+	"displayName": "Liquid Snippet Include Detection",
+	"description": "Visual Studio Code extension tells you whether other liquid files are including the snippet or section you're currently viewing.",
 	"version": "0.1.0",
-	"publisher": "tylershambora",
+	"publisher": "tshamz",
 	"repository": "https://github.com/packdigital/import-export",
 	"engines": {
 		"vscode": "^1.36.0"
