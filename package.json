@@ -9,8 +9,18 @@
 		"vscode": "^1.36.0"
 	},
 	"categories": [
-		"Other"
+		"Other",
+    "Linters",
+    "Programming Languages"
 	],
+  "keywords": [
+    "Shopify",
+    "Liquid",
+    "Liquid Snippets",
+    "Jose Canseco",
+    "Theming"
+  ],
+  "icon": "https://raw.githubusercontent.com/packdigital/import-export/master/icon.jpg",
 	"activationEvents": [
 		"*"
 	],
