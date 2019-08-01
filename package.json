@@ -2,7 +2,7 @@
 	"name": "liquid-snippet-include-detection",
 	"displayName": "Liquid Snippet Include Detection",
 	"description": "A Visual Studio Code extension that tells you whether other liquid files are including the snippet or section you're currently viewing.",
-	"version": "0.6.0",
+	"version": "0.7.0",
 	"publisher": "tshamz",
 	"repository": "https://github.com/packdigital/import-export",
 	"engines": {
@@ -10,17 +10,17 @@
 	},
 	"categories": [
 		"Other",
-    "Linters",
-    "Programming Languages"
+		"Linters",
+		"Programming Languages"
 	],
-  "keywords": [
-    "Shopify",
-    "Liquid",
-    "Liquid Snippets",
-    "Jose Canseco",
-    "Theming"
-  ],
-  "icon": "https://raw.githubusercontent.com/packdigital/import-export/master/icon.jpg",
+	"keywords": [
+		"Shopify",
+		"Liquid",
+		"Liquid Snippets",
+		"Jose Canseco",
+		"Theming"
+	],
+	"icon": "https://raw.githubusercontent.com/packdigital/import-export/master/icon.jpg",
 	"activationEvents": [
 		"*"
 	],
