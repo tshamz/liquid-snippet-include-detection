@@ -1,0 +1,31 @@
+{
+	"name": "liquid-snippet-import-detection",
+	"displayName": "Liquid Snippet Import Detection",
+	"description": "Tells you whether other liquid files are including the currently viewed snippet, and if so, which files.",
+	"version": "0.1.0",
+	"publisher": "tylershambora",
+	"repository": "https://github.com/packdigital/import-export",
+	"engines": {
+		"vscode": "^1.36.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./out/extension.js",
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"lint": "tslint -p ./",
+		"watch": "tsc -watch -p ./"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.36.0",
+		"@types/node": "^12.6.8",
+		"typescript": "^3.5.1",
+		"path": "^0.12.7"
+	},
+	"dependencies": {}
+}
