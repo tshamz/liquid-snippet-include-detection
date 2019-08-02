@@ -54,7 +54,7 @@ function getCurrentFilenameAndPath(): { filename: string, filepath: string } {
 
 async function findSnippetSectionIncludes(filename: string, type: string): Promise<Array<any>> {
   const snippetSectionName = basename(filename, '.liquid');
-  const liquidFiles = await vscode.workspace.findFiles('**/*.liquid');
+  const liquidFiles = await vscode.workspace.findFiles('**/src/**/*.liquid');
 
   const liquidFileWithContents = await Promise.all(
     liquidFiles.map(async liquidFile => {
