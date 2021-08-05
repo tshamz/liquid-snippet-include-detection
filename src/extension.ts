@@ -64,7 +64,7 @@ async function findSnippetSectionIncludes(filename: string, type: string): Promi
   );
 
   return liquidFileWithContents.filter(result => {
-    const regex = `{\%-?\\s+${type === 'snippet' ? 'include' : 'section'}\\s+[\'\"]${snippetSectionName}[\'\"]`;
+    const regex = `{\%-?\\s+${type === 'snippet' ? '(include|render)' : 'section'}\\s+[\'\"]${snippetSectionName}[\'\"]`;
     const snippetIncludeRegex = new RegExp(regex, 'gim');
     return snippetIncludeRegex.test(result.contents);
   });
