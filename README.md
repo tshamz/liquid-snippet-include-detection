@@ -1,5 +1,5 @@
-# Liquid Snippet Import Detection
+# Liquid Snippet Include Detection
 
-A Visual Studio Code extension that tells you whether other liquid files are including the snippet or section you're currently viewing.
+A Visual Studio Code extension that tells you where the liquid snippet or section you're currently viewing is included.
 
-![Show liquid include status](https://raw.githubusercontent.com/packdigital/import-export/master/demo.gif)
+![Show liquid include status](https://raw.githubusercontent.com/tshamz/liquid-snippet-include-detection/master/demo.gif)
